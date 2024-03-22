@@ -168,10 +168,9 @@ jQuery(document).ready(function($){
        
         $('#comer').on('select2:select', function (e) { 
             
-            var data = e.params.data;
-    //console.log(data.text);
-    //document.getElementById('mostrar').value = data.text;
-    window.location = "https://appmeloexpress.com/pedido/indexfiltro/" + data.text; 
+          //  var data = e.params.data;
+    
+    //window.location = "https://appmeloexpress.com/pedido/indexfiltro/" + data.text; 
     //window.location = "http://127.0.0.1:8000/pedido/indexfiltro/" + data.text;
         });
 
@@ -195,49 +194,65 @@ jQuery(document).ready(function($){
             
     <div class="col-12">   <!-- Inicia columna 8  -->
                 
-                <div class="row mt-1 border mr-1">   
+        <div class="row mt-1 border mr-1">   
                 
-                <div class="col-sm-6 mt-4"> <!-- div buscar -->
-
-<div class="input-group mb-3 ">
-
-<div class="input-group-prepend">
-<span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
-</div>
-
-<select class="form-control mi-selector" name="comer" id="comer">
-    <option value="">Buscar Comercio</option>
-    @for($i=0;  $i< count($vendedores); $i++ )
-                    <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
+            <div class="col-sm-4 mt-4"> <!-- div buscar -->
+                <div class="input-group mb-3 ">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
+                    </div>
+                    <select class="form-control mi-selector" name="comer" id="comer">
+                        <option value="">Buscar Comerci</option>
+                         @for($i=0;  $i< count($vendedores); $i++ )
+                        <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
        
                         @endfor
-</select>
-
-</div>
-</div> <!-- Termina div buscar  -->
-
-
-<div class="col-6 mt-4">  <!-- div filtrros  -->
+                    </select>
+                </div>
+            </div> <!-- Termina div buscar  -->
 
 
-<span style="font-size:18px; color: red;"> {{ $nota }} &nbsp; </span>
+        <div class="col-4 mt-4">  <!-- div filtrros  -->
 
-                </div> <!-- Termina div filtros  -->
+                
+                <select class="form-control" >
+                       
+                    <option value="ahora">Ahora</option>
+                    <option value="mensual">Semana</option>
+                    <option value="mensual">último mes</option>         
+                </select>
+&nbsp; &nbsp; &nbsp;
+                   
+        </div> <!-- Termina div filtros  -->
+        <div class="col-2 mt-4">  <!-- div filtrros  -->
+
+
+    <input type="date" id="fentrega" name="fentrega" class="form-control" value="{{ now()->Format('Y-m-d') }}" >
+</div> <!-- Termina div filtros  -->
     
+<div class="col-2 mt-4">  <!-- div filtrros  -->
+
+<button type="submit" class="btn btn-primary" tabindex="19">Buscar</button>
+</div> <!-- Termina div filtros  -->
+    
+
+
+
+
+
+
+
+
+
  
     <div class="col-12">
  
-        
+    <span style="font-size:18px; color: red;"> {{ $nota }} &nbsp; </span>
 
 
             <div class="d-flex justify-content-end">
-            @can('crear-envios')
-            <div >
-
-<a href="/pedidos/create" class="btn btn-warning" style="color:white;"><i class="fas fa-database"></i> Agregar Nuevo</a>
-<br>
-            </div>
-            @endcan
+            
+           
 
   
             </div>
