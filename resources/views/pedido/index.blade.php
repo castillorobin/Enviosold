@@ -2,6 +2,9 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- Include Date Range Picker -->
+
+
 
     <section class="section">
         <div class="section-header">
@@ -226,11 +229,18 @@ jQuery(document).ready(function($){
 &nbsp; &nbsp; &nbsp;
                    
         </div> <!-- Termina div filtros  -->
-        <div class="col-2 mt-4">  <!-- div filtrros  -->
+        <div class="col-2 mt-4">  <!-- div filtrros   <input type="date" id="fecha" name="fecha" class="form-control" >-->
     
     
-        <input type="date" id="fecha" name="fecha" class="form-control" >
        
+       
+
+        
+        <input type="text" class="form-control" name="daterange" value="01/01/2018 - 01/15/2018" />
+
+
+
+
     </div> <!-- Termina div filtros  -->
 
     <div class="col-2 mt-4"> 
@@ -485,8 +495,10 @@ jQuery(document).ready(function($){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" defer></script>
 
-    
-    
+   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
                  
 
     <!--
@@ -494,7 +506,15 @@ jQuery(document).ready(function($){
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js" defer></script>
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js" defer></script>
 -->
-
+<script>
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left'
+  }, function(start, end, label) {
+    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+  });
+});
+</script>
 
 
 <script>
