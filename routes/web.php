@@ -56,11 +56,12 @@ Route::get('pedido/editarlo/{id}', [App\Http\Controllers\PedidoController::class
 Route::get('pedido/crearp', [App\Http\Controllers\PedidoController::class, 'crearp'] )->name('crearp') ;
 Route::get('pedido/crearpf', [App\Http\Controllers\PedidoController::class, 'crearpf'] )->name('crearpf') ;
 Route::get('pedido/crearcas', [App\Http\Controllers\PedidoController::class, 'crearcas'] )->name('crearcas') ;
+   
 
 Route::get('comercio/filtrado/{id}', [App\Http\Controllers\VendedorController::class, 'filtrado'] )->name('filtrado') ;
 Route::get('comercio/listado', [App\Http\Controllers\VendedorController::class, 'comercios'] )->name('comercios') ;
 
-Route::get('pedido/indexfiltro/{id}', [App\Http\Controllers\PedidoController::class, 'indexfiltro'] )->name('indexfiltro') ;
+Route::get('pedido/indexfiltro', [App\Http\Controllers\PedidoController::class, 'indexfiltro'] )->name('indexfiltro') ;
 
 Route::get('pedido/indexdigitadofiltro/{id}', [App\Http\Controllers\PedidoController::class, 'indexdigitadofiltro'] )->name('indexdigitadofiltro') ;
 Route::get('pedido/indexdigitado/', [App\Http\Controllers\PedidoController::class, 'indexdigitado'] )->name('indexdigitado') ;

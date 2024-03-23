@@ -194,15 +194,17 @@ jQuery(document).ready(function($){
             
     <div class="col-12">   <!-- Inicia columna 8  -->
                 
-        <div class="row mt-1 border mr-1">   
+        <div class="row mt-1 mr-1">   
                 
             <div class="col-sm-4 mt-4"> <!-- div buscar -->
+            <form action="/pedido/indexfiltro" method="GET" id="myForm" >
+            @method('GET')
                 <div class="input-group mb-3 ">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
                     </div>
-                    <select class="form-control mi-selector" name="comer" id="comer">
-                        <option value="">Buscar Comerci</option>
+                    <select class="form-control mi-selector" name="comercio" id="comercio">
+                        <option value="">Buscar Comercio</option>
                          @for($i=0;  $i< count($vendedores); $i++ )
                         <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
        
@@ -215,24 +217,26 @@ jQuery(document).ready(function($){
         <div class="col-4 mt-4">  <!-- div filtrros  -->
 
                 
-                <select class="form-control" >
-                       
+                <select class="form-control" name="rango" id="rango" >
+                <option value="rango">Rango</option>
                     <option value="ahora">Ahora</option>
-                    <option value="mensual">Semana</option>
-                    <option value="mensual">último mes</option>         
+                    <option value="semana">última Semana</option>
+                    <option value="mes">último mes</option>         
                 </select>
 &nbsp; &nbsp; &nbsp;
                    
         </div> <!-- Termina div filtros  -->
         <div class="col-2 mt-4">  <!-- div filtrros  -->
-
-
-    <input type="date" id="fentrega" name="fentrega" class="form-control" value="{{ now()->Format('Y-m-d') }}" >
-</div> <!-- Termina div filtros  -->
     
-<div class="col-2 mt-4">  <!-- div filtrros  -->
+    
+        <input type="date" id="fecha" name="fecha" class="form-control" >
+       
+    </div> <!-- Termina div filtros  -->
 
-<button type="submit" class="btn btn-primary" tabindex="19">Buscar</button>
+    <div class="col-2 mt-4"> 
+    <button type="submit" class="btn btn-primary" tabindex="19">Buscar</button>
+    </div> 
+</form>
 </div> <!-- Termina div filtros  -->
     
 

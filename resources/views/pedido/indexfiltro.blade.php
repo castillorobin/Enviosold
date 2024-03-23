@@ -170,10 +170,10 @@ jQuery(document).ready(function($){
        
         $('#comer').on('select2:select', function (e) { 
             
-            var data = e.params.data;
+           // var data = e.params.data;
     //console.log(data.text);
     //document.getElementById('mostrar').value = data.text;
-    window.location = "https://appmeloexpress.com/pedido/indexfiltro/" + data.text; 
+    //window.location = "https://appmeloexpress.com/pedido/indexfiltro/" + data.text; 
     //window.location = "http://127.0.0.1:8000/pedido/indexfiltro/" + data.text;
         });
 
@@ -196,33 +196,53 @@ jQuery(document).ready(function($){
     </div>
             
     <div class="col-12">  
-    <div class="row mt-1 border mr-1">   
+             
+    <div class="row mt-1 mr-1">   
                 
-                <div class="col-sm-6 mt-4"> <!-- div buscar -->
-
-<div class="input-group mb-3 ">
-
-<div class="input-group-prepend">
-<span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
-</div>
-
-<select class="form-control mi-selector" name="comer" id="comer">
-    <option value="">Buscar Comercio</option>
-    @for($i=0;  $i< count($vendedores); $i++ )
-                    <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
+                <div class="col-sm-4 mt-4"> <!-- div buscar -->
+                <form action="/pedido/indexfiltro" method="GET" id="myForm" >
+                @method('GET')
+                    <div class="input-group mb-3 ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
+                        </div>
+                        <select class="form-control mi-selector" name="comercio" id="comercio">
+                            <option value="">Buscar Comercio</option>
+                             @for($i=0;  $i< count($vendedores); $i++ )
+                            <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
+           
+                            @endfor
+                        </select>
+                    </div>
+                </div> <!-- Termina div buscar  -->
+    
+    
+            <div class="col-2 mt-4">  <!-- div filtrros  -->
+    
+                    
+                    <select class="form-control" name="rango" id="rango" >
+                    <option value="rango">Rango</option>
+                        <option value="ahora">Ahora</option>
+                        <option value="semana">última Semana</option>
+                        <option value="mes">último mes</option>         
+                    </select>
+    &nbsp; &nbsp; &nbsp;
+                       
+            </div> <!-- Termina div filtros  -->
+            <div class="col-2 mt-4">  <!-- div filtrros  -->
+    
+    
+        <input type="date" id="fecha" name="fecha" class="form-control" >
        
-                        @endfor
-</select>
+    </div> <!-- Termina div filtros  -->
 
-</div>
-</div> <!-- Termina div buscar  -->
-
-
-<div class="col-6 mt-4">  <!-- div filtrros  -->
-
-
-<span style="font-size:18px; color: red;"> {{ $nota }} &nbsp; </span>
-
+    <div class="col-2 mt-4"> 
+    <button type="submit" class="btn btn-primary" tabindex="19">Buscar</button>
+    </div> 
+    <!-- div filtrros  -->
+    
+    
+    </form>
                 </div> <!-- Termina div filtros  -->
  
     <div class="col-12">
