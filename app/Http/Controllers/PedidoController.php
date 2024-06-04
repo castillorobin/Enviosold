@@ -785,6 +785,8 @@ $fechal = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
 
 
     }
+
+
  
     public function imprimire(Request $request)
     {
@@ -1010,6 +1012,59 @@ $fechal = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function guardarperso(Request $request)
+    {
+
+        $pedidos = new Pedido();
+        
+        $pedidos->vendedor = $request->get('comer');
+        $pedidos->destinatario = $request->get('desti');
+        $pedidos->telefono = $request->get('telefono');
+        $pedidos->direccion = $request->get('direccion');
+        $pedidos->fecha_entrega = $request->get('fentrega');
+        $pedidos->precio = $request->get('precio');
+        $pedidos->envio = $request->get('envio');
+        $pedidos->total = $request->get('total');
+        $pedidos->estado = $request->get('estado');
+        $pedidos->pagado = $request->get('pagado');
+        $pedidos->servicio = $request->get('servicio');
+        $pedidos->tipo = $request->get('tenvio');
+        $pedidos->nota = $request->get('nota');
+        $pedidos->ingresado = $request->get('ingresado');
+        $pedidos->agencia = $request->get('agencia');
+        $pedidos->repartidor = $request->get('repartidor');
+        $pedidos->ruta = $request->get('ruta');
+        $pedidos->estante = $request->get('estante');
+        //$pedidos->foto = $request->get('foto');
+
+        if($request->hasFile('foto')){
+            
+            $imagen = $request->file("foto");
+            $nombreimagen = Str::slug(time()).".".$imagen->guessExtension();
+            $pedidos->foto = $nombreimagen;
+            $ruta = public_path("imgs/fotos/");
+            $imagen->move($ruta,$nombreimagen);
+
+        } 
+        if($request->hasFile('foto2')){
+            
+            $imagen = $request->file("foto2");
+            $nombreimagen = Str::slug(time()).".".$imagen->guessExtension();
+            $pedidos->foto2 = $nombreimagen;
+            $ruta = public_path("imgs/fotos/");
+            $imagen->move($ruta,$nombreimagen);
+
+        }
+
+
+
+        $pedidos->save();
+
+        return redirect()->back();
+
+
+    }
+
     public function store(Request $request)
     {
         $last = Pedido::latest('id')->first();

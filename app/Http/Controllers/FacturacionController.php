@@ -34,7 +34,7 @@ class FacturacionController extends Controller
        //$repartidores = Repartidor::all();
        return view('factura.listado')->with(['vendedores'=>$vendedores, 'nota'=>$nota  ]);
 
-    }
+    } 
     public function listadofiltro($comercio)
     {
         $pedidos = Pedido::where('vendedor', $comercio)

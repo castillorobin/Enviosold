@@ -13,7 +13,7 @@ use \PDF;
 
 class EstatusController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
