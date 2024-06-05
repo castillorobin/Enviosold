@@ -19,7 +19,7 @@ jQuery(document).ready(function($){
             var data = e.params.data;
     //console.log(data.text);
     //document.getElementById('mostrar').value = data.text;
-    window.location = "https://appmeloexpress.com/factura/listadofiltro/" + data.text; 
+    //window.location = "https://appmeloexpress.com/factura/listadofiltro/" + data.text; 
     //window.location = "http://127.0.0.1:8000/factura/listadofiltro/" + data.text;
         });
 
@@ -50,32 +50,98 @@ jQuery(document).ready(function($){
                 
                 <div class="row mt-1 border mr-1">   
                 
-                <div class="col-sm-6 mt-4"> <!-- div buscar -->
 
-<div class="input-group mb-3 ">
 
-<div class="input-group-prepend">
-<span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
-</div>
+                <div class="col-12">   <!-- Inicia columna 8  -->
+                
+                <div class="row mt-1 mr-1">   
+                        
+                    <div class="col-sm-4 mt-4"> <!-- div buscar -->
+                    <form action="/factura/listadofiltro/" method="GET" id="myForm" >
+                    @method('GET')
+                        <div class="input-group mb-3 ">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
+                            </div>
+                            <select class="form-control mi-selector" name="comercio" id="comercio">
+                                <option value="">Buscar Comercio</option>
+                                 @for($i=0;  $i< count($vendedores); $i++ )
+                                <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
+               
+                                @endfor
+                            </select>
+                        </div>
+                    </div> <!-- Termina div buscar  -->
+        
+        
+                <div class="col-4 mt-4">  <!-- div filtrros  -->
+        
+                        
+                        <select class="form-control" name="rango" id="rango" >
+                        <option value="rango">Rango</option>
+                            <option value="ahora">Ahora</option>
+                            <option value="semana">última Semana</option>
+                            <option value="semana2">últimos 30 dias</option> 
+                            <option value="mes">último mes</option>         
+                        </select>
+        &nbsp; &nbsp; &nbsp;
+                           
+                </div> <!-- Termina div filtros  -->
+                <div class="col-2 mt-2 d-flex justify-content-between align-items-center">  <!-- div filtrros   <input type="date" id="fecha" name="fecha" class="form-control" >-->
+            
+            
+               
+             Desde
+            <input type="date" name="desde" id="desde" class="form-control col-4" > 
+           Hasta
+            <input type="date" name="hasta" id="hasta" class="form-control col-4 " >
+                
+                
+           
+        
+        
+            </div> <!-- Termina div filtros  -->
+        
+            <div class="col-2 mt-4"> 
+            <button type="submit" class="btn btn-primary" tabindex="19">Buscar</button>
+            </form>
 
-<select class="form-control mi-selector" name="comer" id="comer">
-    <option value="">Buscar Comercio</option>
-    @for($i=0;  $i< count($vendedores); $i++ )
-                    <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
-       
-                        @endfor
-</select>
+            <a href="/facturas" class="btn btn-danger" style="float:right;">Cerrar</a>
 
-</div>
+            </div> 
+        
+        
+
+        </div> <!-- Termina div filtros  -->
+            
+        
+        
+         
+            <div class="col-12">
+         
+            <span style="font-size:18px; color: red;"> {{ $nota }} &nbsp; </span>
+        
+        
+                    <div class="d-flex justify-content-end">
+                    
+                   
+        
+          
+                    </div>
+
+
+
+
+
+
+
+                <div class="col-sm-6 mt-2"> <!-- div buscar -->
+
+
 </div> <!-- Termina div buscar  -->
 
 
-<div class="col-6 mt-4">  <!-- div filtrros  -->
-<a href="/facturas" class="btn btn-danger" style="float:right;">Cerrar</a>
 
-<span style="font-size:18px; color: red;"> {{ $nota }} &nbsp; </span>
-
-                </div> <!-- Termina div filtros  -->
 
 <div class="col-12 table-responsive " > <!-- div tabla  -->
 <table id="tvendedor" class="table table-striped " style="  ">

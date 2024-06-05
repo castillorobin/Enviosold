@@ -7,11 +7,12 @@ use App\Models\User;
 use App\Models\Facturacion;
 use App\Models\Pedido;
 use App\Models\Vendedor;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use \PDF; 
  
 class FacturacionController extends Controller
-{
+{ 
     /**
      * Display a listing of the resource.
      *
@@ -19,13 +20,30 @@ class FacturacionController extends Controller
      */
     public function index()
     {
+        //$pedidos = Pedido::all();
+	
+	$pedidos = " ";
+
+        $vendedores = Vendedor::all();
+        $nota=" ";
+       //$repartidores = Repartidor::all();
+       return view('factura.index')->with(['pedidos'=>$pedidos, 'vendedores'=>$vendedores, 'nota'=>$nota  ]);
+//	return view('factura.mensaje);
+
+
+    }
+
+	public function iniciando()
+    {
         $pedidos = Pedido::all();
         $vendedores = Vendedor::all();
         $nota=" ";
        //$repartidores = Repartidor::all();
        return view('factura.index')->with(['pedidos'=>$pedidos, 'vendedores'=>$vendedores, 'nota'=>$nota  ]);
 
-    } 
+    }	
+
+ 
     public function listado()
     {
         //$pedidos = Pedido::all();
@@ -34,13 +52,66 @@ class FacturacionController extends Controller
        //$repartidores = Repartidor::all();
        return view('factura.listado')->with(['vendedores'=>$vendedores, 'nota'=>$nota  ]);
 
-    } 
-    public function listadofiltro($comercio)
+    }
+    public function listadofiltro(Request $request)
     {
+
+        $comercio = $request->input('comercio');
         $pedidos = Pedido::where('vendedor', $comercio)
         ->where('pagado', "pagado")
         
         ->get();
+ 
+
+        
+        $rango = $request->input('rango');
+        $fecha = $request->input('fecha');
+       
+       //$pedidos = Pedido::where('vendedor', $comercio)->get();
+      
+        if($rango=="ahora")
+        {    
+        $pedidos = $pedidos->intersect(Pedido::whereIn('fecha_entrega', [Carbon::today()])->get());    
+        }
+        if($rango=="semana")
+        {    
+            $pedidos = Pedido::where('vendedor', $comercio)
+            ->whereBetween('fecha_entrega', [Carbon::now()->subWeek()->format("Y-m-d"), Carbon::now()])
+            ->get();
+
+       
+        }
+
+        if($rango=="semana2")
+        {    
+            $pedidos = Pedido::where('vendedor', $comercio)
+            //->whereMonth('fecha_entrega', '>', [Carbon::now()->subDays(30)->format("Y-m-d"), Carbon::now()])
+            ->where('fecha_entrega', '>', Carbon::now()->subDays(30))
+            ->get();
+
+        
+        } 
+        if($rango=="mes")
+        {    
+            $pedidos = Pedido::where('vendedor', $comercio)
+            ->whereMonth('fecha_entrega', Carbon::now()->month)
+            ->get();
+
+        
+        } 
+
+        $desde = $request->input('desde');
+        $hasta = $request->input('hasta');
+        
+        if($desde != ""){
+            $pedidos = $pedidos->intersect(Pedido::whereBetween('fecha_entrega', [$desde, $hasta])->get());
+
+        }
+
+
+
+
+
         $vendedores = Vendedor::all();
         $facturas = Facturacion::all();
         $nota=" ";
@@ -87,9 +158,61 @@ class FacturacionController extends Controller
     }
     
 
-    public function filtro($comercio)
+    public function filtro(Request $request)
     {
-        $pedidos = Pedido::where('vendedor', $comercio)->get();
+        $comercio = $request->input('comercio');
+
+
+
+        $rango = $request->input('rango');
+        $fecha = $request->input('fecha');
+       
+       $pedidos = Pedido::where('vendedor', $comercio)->get();
+      
+        if($rango=="ahora")
+        {    
+        $pedidos = $pedidos->intersect(Pedido::whereIn('fecha_entrega', [Carbon::today()])->get());    
+        }
+        if($rango=="semana")
+        {    
+            $pedidos = Pedido::where('vendedor', $comercio)
+            ->whereBetween('fecha_entrega', [Carbon::now()->subWeek()->format("Y-m-d"), Carbon::now()])
+            ->get();
+
+       
+        }
+
+        if($rango=="semana2")
+        {    
+            $pedidos = Pedido::where('vendedor', $comercio)
+            //->whereMonth('fecha_entrega', '>', [Carbon::now()->subDays(30)->format("Y-m-d"), Carbon::now()])
+            ->where('fecha_entrega', '>', Carbon::now()->subDays(30))
+            ->get();
+
+        
+        } 
+
+
+        if($rango=="mes")
+        {    
+            $pedidos = Pedido::where('vendedor', $comercio)
+            ->whereMonth('fecha_entrega', Carbon::now()->month)
+            ->get();
+
+        
+        } 
+
+        $desde = $request->input('desde');
+        $hasta = $request->input('hasta');
+        
+        if($desde != ""){
+            $pedidos = $pedidos->intersect(Pedido::whereBetween('fecha_entrega', [$desde, $hasta])->get());
+
+        }
+
+
+
+        //$pedidos = Pedido::where('vendedor', $comercio)->get();
         //$pedidos = Pedido::all();
         $vendedores = Vendedor::all();
         $vende = Vendedor::where('nombre', $comercio)->get();

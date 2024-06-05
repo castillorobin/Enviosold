@@ -34,36 +34,59 @@ class PedidoController extends Controller
 
 
     }
-    public function indexdigitado()
+
+    public function noretirado()
     {
         //$pedidos = Pedido::all();
-        $pedidos = Pedido::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
-               // $repartidores = Repartidor::all();
+        //$pedidos = Pedido::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+        $repartidores = Repartidor::all();
+        //$vendedores = Vendedor::all();
+        $nota= ' ';
+        return view('pedido.reporteestado', compact('repartidores','nota'));
+
+
+    }
+    public function noretiradofiltro(Request $request)
+    {
+        //$pedidos = Pedido::all();
+        //$pedidos = Pedido::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+        $repartidores = Repartidor::all();
+        //$vendedores = Vendedor::all();
+
+        $repartidor = $request->input('repartidor');
+        $rango = $request->input('rango');
+        $estado = $request->input('estado');
+        
+        $pedidos = Pedido::where('repartidor', $repartidor)->get();
+       
+        return view('pedido.noretiradofiltro', compact('repartidores', 'pedidos'));
+
+
+    }
+
+    public function indexdigitado()
+    {
+        
+       //$pedidos = Pedido::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
+             
         $vendedores = Vendedor::all();
         $nota= ' ';
-        return view('pedido.indexdigitado', compact('pedidos','vendedores','nota'));
+
+        
+        return view('pedido.indexdigitado', compact('vendedores','nota'));
 
 
     }
     public function indexfiltro(Request $request)
     {
-        //$pedidos = Pedido::all();
-        //$pedidos = Pedido::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
-
-        /*
-        $pedidos = Pedido::where('vendedor', $comercio)->get();
-        $vendedores = Vendedor::all();
-        $nota= ' ';
-        */
+        
         $nota= ' ';
         $comercio = $request->input('comercio');
         $rango = $request->input('rango');
         $fecha = $request->input('fecha');
-       // !isset($comercio)  && $fecha==""
+       
        $pedidos = Pedido::where('vendedor', $comercio)->get();
-      // Carbon::setWeekStartsAt(Carbon::SUNDAY);
-    //Carbon::setWeekEndsAt(Carbon::SATURDAY);
-
+      
         if($rango=="ahora")
         {    
         $pedidos = $pedidos->intersect(Pedido::whereIn('fecha_entrega', [Carbon::today()])->get());    
@@ -74,7 +97,7 @@ class PedidoController extends Controller
             ->whereBetween('fecha_entrega', [Carbon::now()->subWeek()->format("Y-m-d"), Carbon::now()])
             ->get();
 
-        //$pedidos = $pedidos->intersect(Pedido::whereIn('fecha_entrega', [Carbon::now()->subWeek()->format("Y-m-d"), Carbon::now()])->get());    
+       
         }
         if($rango=="mes")
         {    
@@ -82,32 +105,61 @@ class PedidoController extends Controller
             ->whereMonth('fecha_entrega', Carbon::now()->month)
             ->get();
 
-        //$pedidos = $pedidos->intersect(Pedido::whereIn('fecha_entrega', [Carbon::now()->subWeek()->format("Y-m-d"), Carbon::now()])->get());    
-        }
-        if($fecha!="")
-        {    
-        $pedidos = $pedidos->intersect(Pedido::whereIn('fecha_entrega', [$fecha])->get());    
-        }
+        
+        } 
 
+        $desde = $request->input('desde');
+        $hasta = $request->input('hasta');
+        
+        if($desde != ""){
+            $pedidos = $pedidos->intersect(Pedido::whereBetween('fecha_entrega', [$desde, $hasta])->get());
+
+        }
         $vendedores = Vendedor::all();
-
-       
-
-
-
         return view('pedido.indexfiltro', compact('pedidos','vendedores','nota'));
-
-
     }
 
-    public function indexdigitadofiltro($comercio)
+    public function indexdigitadofiltro(Request $request)
     {
-        //$pedidos = Pedido::all();
-        //$pedidos = Pedido::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
-        $pedidos = Pedido::where('vendedor', $comercio)->get();
-        $vendedores = Vendedor::all();
+        
         $nota= ' ';
+        $comercio = $request->input('comercio');
+        $rango = $request->input('rango');
+        $fecha = $request->input('fecha');
+       
+       $pedidos = Pedido::where('vendedor', $comercio)->get();
+      
+        if($rango=="ahora")
+        {    
+        $pedidos = $pedidos->intersect(Pedido::whereIn('fecha_entrega', [Carbon::today()])->get());    
+        }
+        if($rango=="semana")
+        {    
+            $pedidos = Pedido::where('vendedor', $comercio)
+            ->whereBetween('fecha_entrega', [Carbon::now()->subWeek()->format("Y-m-d"), Carbon::now()])
+            ->get();
+
+       
+        }
+        if($rango=="mes")
+        {    
+            $pedidos = Pedido::where('vendedor', $comercio)
+            ->whereMonth('fecha_entrega', Carbon::now()->month)
+            ->get();
+
+        
+        } 
+
+        $desde = $request->input('desde');
+        $hasta = $request->input('hasta');
+        
+        if($desde != ""){
+            $pedidos = $pedidos->intersect(Pedido::whereBetween('fecha_entrega', [$desde, $hasta])->get());
+
+        }
+        $vendedores = Vendedor::all();
         return view('pedido.indexdigitadofiltro', compact('pedidos','vendedores','nota'));
+        
 
 
     }
@@ -173,10 +225,10 @@ class PedidoController extends Controller
     public function reporte()
     {
 
-        $pedidos = Pedido::all();
+        //$pedidos = Pedido::all();
 
        $repartidores = Repartidor::all();
-        return view('pedido.reportes', compact('pedidos','repartidores'));
+        return view('pedido.reportes', compact('repartidores'));
 
     }
     public function reporteenvio()
@@ -785,8 +837,6 @@ $fechal = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
 
 
     }
-
-
  
     public function imprimire(Request $request)
     {
@@ -1012,7 +1062,9 @@ $fechal = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardarperso(Request $request)
+	
+
+	public function guardarperso(Request $request)
     {
 
         $pedidos = new Pedido();
@@ -1064,6 +1116,12 @@ $fechal = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
 
 
     }
+
+
+
+
+
+
 
     public function store(Request $request)
     {
@@ -1174,9 +1232,11 @@ $fechal = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
         $pdf->setPaper($customPaper, 'landscape');
         return $pdf->stream();
         }elseif(isset($_POST['personali'])){
-            return view('/pedido/personalizado')->with(['pedidos'=>$pedidos, 'vendedores'=>$vendedores, 'date'=>$date, 'repartidores'=>$repartidores, 'uid'=>$uid, 'pedidof'=>$pedidof, 'rutaf'=>$rutaf, 'repaf'=>$repaf, 'last'=>$last]);
+            return view('pedido.personalizado')->with(['vendedores'=>$vendedores, 'date'=>$date, 'repartidores'=>$repartidores, 'uid'=>$uid, 'pedidof'=>$pedidof, 'rutaf'=>$rutaf, 'repaf'=>$repaf, 'last'=>$last]);
+	    //return redirect()->back();
         }elseif(isset($_POST['puntof'])){
-            return view('/pedido/puntofijo')->with(['pedidos'=>$pedidos, 'vendedores'=>$vendedores, 'date'=>$date, 'repartidores'=>$repartidores, 'uid'=>$uid, 'pedidof'=>$pedidof, 'rutaf'=>$rutaf, 'repaf'=>$repaf, 'last'=>$last]);
+          //  return view('/pedido/puntofijo')->with(['pedidos'=>$pedidos, 'vendedores'=>$vendedores, 'date'=>$date, 'repartidores'=>$repartidores, 'uid'=>$uid, 'pedidof'=>$pedidof, 'rutaf'=>$rutaf, 'repaf'=>$repaf, 'last'=>$last]);
+	return redirect()->back();
         }elseif(isset($_POST['casi'])){
             return view('/pedido/casillero')->with(['pedidos'=>$pedidos, 'vendedores'=>$vendedores, 'date'=>$date, 'repartidores'=>$repartidores, 'uid'=>$uid, 'pedidof'=>$pedidof, 'rutaf'=>$rutaf, 'repaf'=>$repaf, 'last'=>$last]);
         }

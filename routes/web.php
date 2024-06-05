@@ -32,7 +32,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/facturasfiltro/{comercio}', [App\Http\Controllers\FacturacionController::class, 'filtro'])->name('facturasfiltro');
+Route::get('/facturasfiltro', [App\Http\Controllers\FacturacionController::class, 'filtro'])->name('facturasfiltro');
  
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RolController::class);
@@ -43,9 +43,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('vendedores', VendedorController::class);
     Route::resource('facturas', FacturacionController::class);
     Route::resource('estatus', EstatusController::class);
-    
+     
 }); 
 Route::group(['middleware' => ['auth']], function() {
+Route::get('pedido/noretirado', [App\Http\Controllers\PedidoController::class, 'noretirado'] )->name('noretirado') ;
+Route::get('pedido/noretiradofiltro', [App\Http\Controllers\PedidoController::class, 'noretiradofiltro'] )->name('noretiradofiltro') ;
+
 Route::get('pedido/desdeenvio', [App\Http\Controllers\PedidoController::class, 'desdeenvio'] )->name('desdeenvio') ;
 Route::get('pedido/comerperso', [App\Http\Controllers\PedidoController::class, 'comerperso'] )->name('comerperso') ;
 Route::get('pedido/comerpfijo', [App\Http\Controllers\PedidoController::class, 'comerpfijo'] )->name('comerpfijo') ;
@@ -56,21 +59,23 @@ Route::get('pedido/editarlo/{id}', [App\Http\Controllers\PedidoController::class
 Route::get('pedido/crearp', [App\Http\Controllers\PedidoController::class, 'crearp'] )->name('crearp') ;
 Route::get('pedido/crearpf', [App\Http\Controllers\PedidoController::class, 'crearpf'] )->name('crearpf') ;
 Route::get('pedido/crearcas', [App\Http\Controllers\PedidoController::class, 'crearcas'] )->name('crearcas') ;
-   
+Route::get('pedido/guardarperso', [App\Http\Controllers\PedidoController::class, 'guardarperso'] )->name('guardarpers') ;   
 
 Route::get('comercio/filtrado/{id}', [App\Http\Controllers\VendedorController::class, 'filtrado'] )->name('filtrado') ;
 Route::get('comercio/listado', [App\Http\Controllers\VendedorController::class, 'comercios'] )->name('comercios') ;
 
 Route::get('pedido/indexfiltro', [App\Http\Controllers\PedidoController::class, 'indexfiltro'] )->name('indexfiltro') ;
 
-Route::get('pedido/indexdigitadofiltro/{id}', [App\Http\Controllers\PedidoController::class, 'indexdigitadofiltro'] )->name('indexdigitadofiltro') ;
+Route::get('pedido/indexdigitadofiltro', [App\Http\Controllers\PedidoController::class, 'indexdigitadofiltro'] )->name('indexdigitadofiltro') ;
 Route::get('pedido/indexdigitado/', [App\Http\Controllers\PedidoController::class, 'indexdigitado'] )->name('indexdigitado') ;
 
 Route::get('comercio/guardar', [App\Http\Controllers\VendedorController::class, 'guardar'] )->name('guardar') ;
 
+Route::get('facturas', [App\Http\Controllers\FacturacionController::class, 'index'] )->name('facturacion') ;
+Route::get('factura/facturando', [App\Http\Controllers\FacturacionController::class, 'index'] )->name('factura.facturando') ;
 Route::get('factura/facturapdf/{pedidos}', [App\Http\Controllers\FacturacionController::class, 'facturapdf'] )->name('pedido.facturapdf') ;
 Route::get('factura/listado', [App\Http\Controllers\FacturacionController::class, 'listado'] )->name('factura.listado') ;
-Route::get('factura/listadofiltro/{comercio}', [App\Http\Controllers\FacturacionController::class, 'listadofiltro'] )->name('factura.listadofiltro') ;
+Route::get('factura/listadofiltro/', [App\Http\Controllers\FacturacionController::class, 'listadofiltro'] )->name('factura.listadofiltro') ;
 
 Route::get('factura/listadopagos', [App\Http\Controllers\FacturacionController::class, 'listadopagos'] )->name('factura.listadopagos') ;
 Route::get('factura/listadopagosfiltro/', [App\Http\Controllers\FacturacionController::class, 'listadopagosfiltro'] )->name('factura.listadopagosfiltro') ;

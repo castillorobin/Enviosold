@@ -48,6 +48,7 @@
         <a class="dropdown-item" href="/reportes/repobodegafecha"><i class="fas fa-calendar-alt"></i>Cambiar Estado Fechas</a>
         <a class="dropdown-item" href="/estado/estadolote"><i class="fas fa-list-ul"></i>Cambiar en Lote</a>
         <a class="dropdown-item" href="/estado/estadomanual"><i class="fas fa-dolly"></i>Estado Manual</a>
+        <a class="dropdown-item" href="/pedido/noretirado"><i class="fas fa-dolly"></i>No retirado</a>
        
          
         </div>
@@ -69,7 +70,7 @@
     <i class="fas fa-money-bill-wave"></i> Facturación
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/facturas"><i class="fas fa-money-bill-wave"></i>Pagos</a>
+          <a class="dropdown-item" href="/factura/facturando"><i class="fas fa-money-bill-wave"></i>Pagos</a>
           
           <a class="dropdown-item" href="/factura/listado"><i class="fas fa-file-invoice"></i>Detalles de Pago</a>
 

@@ -62,35 +62,32 @@ jQuery(document).ready(function($){
                     <div class="card"> 
                         <div class="card-body">
 
-                            <h3 class="text-center">Facturación</h3>
+                            <h3 class="text-center">Listado no retirados</h3>
                         
             <div class="row  py-2" style="background-color: white;" >   <!-- Inicia fila General -->
-            <div class="col-12 text-center pt-3 mb-3" style="background-color:#e85f24; color:white; height:75px;">  <!-- Inicia columna total  -->
-<H1>Total $ <label for="" id="preci">0</label></H1>
-
-</div> <!-- Termina columna total  -->
+            <!-- Termina columna total  -->
 <div class="col-12">   <!-- Inicia columna 8  -->
                 
                 <div class="row mt-1 mr-1">   
                         
-                    <div class="col-sm-4 mt-4"> <!-- div buscar -->
-                    <form action="/facturasfiltro" method="GET" id="myForm" >
+                    <div class="col-sm-2 mt-4"> <!-- div buscar -->
+                    <form action="/pedido/noretiradofiltro" method="GET" id="myForm" >
                     @method('GET') 
                         <div class="input-group mb-3 ">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
                             </div>
-                            <select class="form-control mi-selector" name="comercio" id="comercio">
-                                <option value="">Buscar Comercio</option>
-                                 @for($i=0;  $i< count($vendedores); $i++ )
-                                <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
+                            <select class="form-control mi-selector" name="repartidor" id="repartidor">
+                                <option value="">Buscar Repartido</option>
+                                 @for($i=0;  $i< count($repartidores); $i++ )
+                                <option value="{{$repartidores[$i]->nombre}}">{{ $repartidores[$i]->nombre }} </option>
                
                                 @endfor
                             </select>
                         </div>
                     </div> <!-- Termina div buscar  -->
              
-                <div class="col-4 mt-4">  <!-- div filtrros  -->
+                <div class="col-2 mt-4">  <!-- div filtrros  -->
                                
                         <select class="form-control" name="rango" id="rango" >
                         <option value="rango">Rango</option>
@@ -104,10 +101,32 @@ jQuery(document).ready(function($){
                 </div> <!-- Termina div filtros  -->
                 <div class="col-2 mt-2 d-flex justify-content-between align-items-center">  <!-- div filtrros   <input type="date" id="fecha" name="fecha" class="form-control" >-->
                          
-             Desde
-            <input type="date" name="desde" id="desde" class="form-control col-4" > 
-           Hasta
-            <input type="date" name="hasta" id="hasta" class="form-control col-4 " >
+                    <div class="input-group">
+
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">  <img src="https://img.icons8.com/ios-filled/25/null/deliver-food.png"/></span>
+                        </div>
+                        <select id="estado" name="estado" class="form-control mi-selector" >
+                          <option value="estado" >Estado del Envio</option>
+                          <option value="Creado" >Creado</option>
+                          <option value="En ruta">En ruta</option>
+                          <option value="Entregado">Entregado</option>
+                          <option value="Nr devuelto al comercio">Nr devuelto al comercio</option>
+                          <option value="Reprogramado">Reprogramado</option>
+                          <option value="Agencia San Salvador">Agencia San Salvador</option>
+                          <option value="Agencia San Miguel">Agencia San Miguel</option>
+                          <option value="Agencia Santa Ana">Agencia Santa Ana</option>
+                          <option value="No retirado">No retirado</option>
+                          <option value="No retirado agencia San Salvador">No retirado agencia San Salvador</option>
+                          <option value="No retirado agencia San Miguel">No retirado agencia San Miguel</option>
+                          <option value="No retirado agencia Santa Ana">No retirado agencia Santa Ana</option>
+                          <option value="No retirado Centro logístico">No retirado Centro logístico</option>
+                          <option value="Casillero San Salvador">Casillero San Salvador</option>
+                          <option value="Casillero San Miguel">Casillero San Miguel</option>
+                          <option value="Casillero Santa Ana">Casillero Santa Ana</option>
+                        </select>
+                         
+                      </div>
                 
         
             </div> <!-- Termina div filtros  -->
@@ -118,10 +137,7 @@ jQuery(document).ready(function($){
         </form>
 
 
-        <a href="/factura/listado">
-<button type="button" class="btn btn-warning"  style="float:right">
- Detalles de pago
-</button></a>
+       
 </div> 
 
         </div> <!-- Termina div filtros  -->
@@ -186,12 +202,12 @@ jQuery(document).ready(function($){
 
 <tr class="text-center" style="background-color:#6777ef; height:5px;">
     
-    <td style="color: #fff; height:5px;" colspan="2">SUMAS</td>
-    <td style="color: #fff; height:5px;">IVA </td>
-    <td  style="color: #fff; height:5px;">SUBTOTAL</td>
-    <td  style="color: #fff; height:5px;" colspan="2">VENTA NO SUJETA </td>
-    <td  style="color: #fff; height:5px;" colspan="2">VENTA EXCENTA </td>
-    <td  style="color: #fff; height:5px;" colspan="2">TOTAL</td>
+    <td style="color: #fff; height:5px;" colspan="2"></td>
+    <td style="color: #fff; height:5px;"></td>
+    <td  style="color: #fff; height:5px;"></td>
+    <td  style="color: #fff; height:5px;" colspan="2"></td>
+    <td  style="color: #fff; height:5px;" colspan="2"> </td>
+    <td  style="color: #fff; height:5px;" colspan="2"></td>
     <td style="color: #fff; height:5px;"></td>
     <td style="color: #fff; height:5px;"></td>
     <td style="color: #fff; height:5px;"></td>
@@ -202,12 +218,12 @@ jQuery(document).ready(function($){
 </tr>
 
 <tr class="text-center">    
-<td colspan="2">$000.00</td>
-    <td>$000.00</td>
-    <td > $000.00</td>
-    <td  colspan="2">$000.00</td>
-    <td  colspan="2">$000.00</td>
-    <td  colspan="2">$000.00</td>
+<td colspan="2"></td>
+    <td></td>
+    <td ></td>
+    <td  colspan="2"></td>
+    <td  colspan="2"></td>
+    <td  colspan="2"></td>
     <td >  </td>
     <td> </td>
    <td></td>
@@ -219,13 +235,7 @@ jQuery(document).ready(function($){
 
 </div><!-- termina div tabla  -->
 <div class="col-6 my-4">
-&nbsp; &nbsp;
-<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal"> Pagar</button> 
-  &nbsp;  &nbsp; <a href="/facturas" class="btn btn-danger">Cancelar</a>
-    <br>
-    <p></p>
-    &nbsp;
-    <p></p>
+
     </div>
 
                 </div> <!-- Termina columna 12 -->

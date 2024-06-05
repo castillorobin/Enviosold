@@ -215,10 +215,10 @@ Inicia nuevo formulario
 
 
 
-<form action="/pedidos" method="POST" id="myForm" enctype="multipart/form-data" >
-    @csrf
+<form action="/pedido/guardarperso" method="POST" id="myForm" enctype="multipart/form-data" >
+   @csrf
 
-       
+       @method('GET')
   <div class="row mx-1" >
    
       <div class="alert alert-danger mx-3 mt-4" role="alert">
@@ -250,7 +250,7 @@ Parte 1
             <br>
 
 
- 
+
 
 
 

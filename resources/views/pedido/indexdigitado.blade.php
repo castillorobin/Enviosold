@@ -17,7 +17,7 @@
 @page {
 size: landscape;
 }
-}
+} 
     /*
     .dropdown-menu-center {
   left: 2% !important;
@@ -171,7 +171,7 @@ jQuery(document).ready(function($){
             var data = e.params.data;
     //console.log(data.text);
     //document.getElementById('mostrar').value = data.text;
-    window.location = "https://appmeloexpress.com/pedido/indexdigitadofiltro/" + data.text; 
+   // window.location = "https://appmeloexpress.com/pedido/indexdigitadofiltro/" + data.text; 
    // window.location = "http://127.0.0.1:8000/pedido/indexdigitadofiltro/" + data.text;
         });
 
@@ -192,57 +192,75 @@ jQuery(document).ready(function($){
     <div class="  col-sm-12 py-3" >
         <h3 class="text-center">Reporte de envíos</h3>
     </div>
-            
     <div class="col-12">   <!-- Inicia columna 8  -->
                 
-                <div class="row mt-1 border mr-1">   
-                
-                <div class="col-sm-6 mt-4"> <!-- div buscar -->
-
-<div class="input-group mb-3 ">
-
-<div class="input-group-prepend">
-<span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
-</div>
-
-<select class="form-control mi-selector" name="comer" id="comer">
-    <option value="">Buscar Comercio</option>
-    @for($i=0;  $i< count($vendedores); $i++ )
-                    <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
-       
-                        @endfor
-</select>
-
-</div>
-</div> <!-- Termina div buscar  -->
-
-
-<div class="col-6 mt-4">  <!-- div filtrros  -->
-
-
-<span style="font-size:18px; color: red;"> {{ $nota }} &nbsp; </span>
-
-                </div> <!-- Termina div filtros  -->
-    
- 
-    <div class="col-12">
- 
+                <div class="row mt-1 mr-1">   
+                        
+                    <div class="col-sm-4 mt-4"> <!-- div buscar -->
+                    <form action="/pedido/indexdigitadofiltro" method="GET" id="myForm" >
+                    @method('GET')
+                        <div class="input-group mb-3 ">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
+                            </div>
+                            <select class="form-control mi-selector" name="comercio" id="comercio">
+                                <option value="">Buscar Comercio</option>
+                                 @for($i=0;  $i< count($vendedores); $i++ )
+                                <option value="{{$vendedores[$i]->nombre}}">{{ $vendedores[$i]->nombre }} </option>
+               
+                                @endfor
+                            </select>
+                        </div>
+                    </div> <!-- Termina div buscar  -->
         
-
-
-            <div class="d-flex justify-content-end">
-            @can('crear-envios')
-            <div >
-
-<a href="/pedidos/create" class="btn btn-warning" style="color:white;"><i class="fas fa-database"></i> Agregar Nuevo</a>
-<br>
-            </div>
-            @endcan
-
-  
-            </div>
-
-
+        
+                <div class="col-4 mt-4">  <!-- div filtrros  -->
+        
+                        
+                        <select class="form-control" name="rango" id="rango" >
+                        <option value="rango">Rango</option>
+                            <option value="ahora">Ahora</option>
+                            <option value="semana">última Semana</option>
+                            <option value="mes">último mes</option>         
+                        </select>
+        &nbsp; &nbsp; &nbsp;
+                           
+                </div> <!-- Termina div filtros  -->
+                <div class="col-2 mt-2 d-flex justify-content-between align-items-center">  <!-- div filtrros   <input type="date" id="fecha" name="fecha" class="form-control" >-->
+            
+            
+               
+             Desde
+            <input type="date" name="desde" id="desde" class="form-control col-4" > 
+           Hasta
+            <input type="date" name="hasta" id="hasta" class="form-control col-4 " >
+                
+                
+           
+        
+        
+            </div> <!-- Termina div filtros  -->
+        
+            <div class="col-2 mt-4"> 
+            <button type="submit" class="btn btn-primary" tabindex="19">Buscar</button>
+            </div> 
+        </form>
+        </div> <!-- Termina div filtros  -->
+            
+        
+        
+         
+            <div class="col-12">
+         
+            <span style="font-size:18px; color: red;"> {{ $nota }} &nbsp; </span>
+        
+        
+                    <div class="d-flex justify-content-end">
+                    
+                   
+        
+          
+                    </div>
 
 
 <div class="table-responsive">
@@ -273,168 +291,6 @@ jQuery(document).ready(function($){
 </tbody>
 </table>
 
-
-
-
-<!-- Inicio Modal -->
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel" style="float: left;"></h1> &nbsp; &nbsp; &nbsp;
-        <span style="float: right; text-align: right;"><button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button></span>
-      </div>
-      <div class="modal-body">
-        <div class="row p-3 m-3" style="border: solid 1px;">
-           
-            <table class="table table-borderless" >
-                <tr>
-                    <td  colspan="3"><h4>Datos del Comercio</h4>
-                        <hr>
-                    </td>
-                    
-                </tr>
-
-                <tr class="headt">
-                    <td width="230px">Nombre de comercio / Tienda </td>
-                    <td> <span ></span> <label for="" id="nombre"></label> </td>
-                    <td rowspan="22"><span ></span> <img alt="Foto1" class="grande " id="fotoss" width="250" > 
-                    <br> <img alt="" id="fotos2" width="250">
-                    <br> <img alt="" id="fotos3" width="250"></td>
-                </tr>
-
-                <tr class="headt">
-                    <td width="230px">Dirección </td>
-                    <td> <span ></span> </td>
-                    
-                </tr>
-                
-
-                <tr class="headt">
-                    <br>
-                    <td  colspan="3" class="pt-2"> <h4> Datos del destinatario</h4>
-                        <hr>
-                    </td>
-                      
-                </tr>
-
-                <tr class="headt">
-                    <td width="230px">Destinatario </td>
-                    <td> <span ></span> <label for="" id="desti"></label> </td>
-                    
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Telefono </td>
-                    <td> <span ></span> <label for="" id="telef"></label> </td>
-                    
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Direccion de entrega </td>
-                    <td> <span ></span> <label for="" id="direc"></label> </td>
-                    
-                </tr>
-                
-
-                <tr class="headt">
-                    <br>
-                    <td  colspan="3" class="pt-2"> <h4> Datos del paquete</h4>
-                        <hr>
-                    </td>
-                      
-                </tr>
- 
-                <tr class="headt">
-                    <td width="230px">Fecha de creacion </td>
-                    <td> <span ></span> <label for="" id="fecha"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Fecha de entrega </td>
-                    <td> <span ></span> <label for="" id="fechen"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Tipo de envio </td>
-                    <td> <span ></span> <label for="" id="tipoe"></label> </td>  
-                </tr>
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Estado del envio </td>
-                    <td> <span ></span> <label for="" id="este"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Estado del pago </td>
-                    <td> <span ></span> <label for="" id="estp"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Precio del paquete </td>
-                    <td> <span ></span> <label for="" id="preci"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Costo del envio </td>
-                    <td> <span ></span> <label for="" id="envio"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Total a cobrar </td>
-                    <td> <span ></span> <label for="" id="total"></label> </td>  
-                </tr>
-
-                <tr class="headt">
-                    <br>
-                    <td  colspan="3" class="pt-2"> <h4> Datos internos</h4>
-                        <hr>
-                    </td>
-                      
-                </tr>
-
-                <tr class="headt">
-                    <td width="230px">Usuario que registró </td>
-                    <td> <span ></span> <label for="" id="ingre"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Recepción agencia </td>
-                    <td> <span ></span> <label for="" id="agen"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Repartidor </td>
-                    <td> <span ></span> <label for="" id="repar"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Ruta </td>
-                    <td> <span ></span> <label for="" id="ruta1"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Nota </td>
-                    <td> <span ></span> <label for="" id="nota1"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Estante</td>
-                    <td> <span ></span> <label for="" id="estan"></label> </td>  
-                </tr>
-                <tr class="headt">
-                    <td width="230px">Cobro de envio</td>
-                    <td> <span ></span> <label for="" id="cobro"></label> </td>  
-                </tr>
-
-
-            </table>
-
-
-        </div>
-
-
-
-       
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times" style="color: #ffffff;"></i> &nbsp; Cerrar</button>
-        <a id="impri" class="btn btn-primary" style="color: #ffffff;">Imprimir</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Termina Modal -->
 
 
 
@@ -478,81 +334,6 @@ jQuery(document).ready(function($){
 
 
 
-<script>
-       
-        
-$(document).ready(function(){
-	$(document).on('click', '.edit', function(){
-		var id=$(this).val();
-		var nomb=$('#nom'+id).text();
-        var dest=$('#des'+id).text();
-        var tele=$('#tel'+id).text();
-        var dire=$('#dir'+id).text();
-        var fech=$('#fec'+id).text();
-        var feche=$('#fece'+id).text();
-        var tipo=$('#tip'+id).text();
-        var est=$('#este'+id).text();
-        var esp=$('#estp'+id).text();
-        var prec=$('#pre'+id).text();
-        var envi=$('#env'+id).text();
-        var tota=$('#tot'+id).text();
-        var ingr=$('#ing'+id).text();
-        var ange=$('#ang'+id).text();
-        var repa=$('#rep'+id).text();
-        var ruta=$('#rut'+id).text();
-        var nota=$('#not'+id).text();
-        var esta=$('#est'+id).text();
-        var cobr=$('#cob'+id).text();
-        var fotoo=$('#fott'+id).text();
-        var foto2=$('#fot2'+id).text();
-        var foto3=$('#fot3'+id).text();
-        //foti= '/imgs/fotos/';
-
-		
-	
-		$('#edit').modal('show');
-		$('#nombre').text(nomb);
-        $('#desti').text(dest);
-        $('#telef').text(tele);
-        $('#direc').text(dire);
-        $('#fecha').text(fech);
-        $('#fechen').text(feche);
-        $('#tipoe').text(tipo);
-        $('#este').text(est);
-        $('#estp').text(esp);
-        $('#preci').text(prec);  
-        $('#envio').text(envi);
-        $('#total').text(tota);
-        $('#ingre').text(ingr);
-        $('#agen').text(ange);
-        $('#repar').text(repa);
-        $('#ruta1').text(ruta);
-        $('#nota1').text(nota);
-        $('#estan').text(esta);
-        $('#cobro').text(cobr);
-
-
-        $('#fotoss').attr("src", fotoo);
-        $('#fotos2').attr("src", foto2);
-        $('#fotos3').attr("src", foto3);
-        //$('#fotos').src(fot);
-        var ide = '/repartidor/imprimir/'+id ;
-		
-
-        //$('#impri a').prop("href", ide);
-        //$('.paginacion a').prop('href','http://nuevaUrl.com');
-
-        document.getElementById("impri").href = ide;
-	});
-});
- 
-
-
-
-
-
-
-    </script>
 
     <script>
          

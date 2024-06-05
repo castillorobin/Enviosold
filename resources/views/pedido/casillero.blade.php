@@ -213,9 +213,9 @@ Inicia nuevo formulario
 
 
 
-<form action="/pedidos" method="POST" id="myForm" enctype="multipart/form-data" >
+<form action="/pedido/guardarperso" method="POST" id="myForm" enctype="multipart/form-data" >
     @csrf
-
+ @method('GET')
        
   <div class="row mx-1" >
    

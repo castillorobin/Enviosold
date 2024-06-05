@@ -229,10 +229,14 @@ jQuery(document).ready(function($){
     &nbsp; &nbsp; &nbsp;
                        
             </div> <!-- Termina div filtros  -->
-            <div class="col-2 mt-4">  <!-- div filtrros  -->
+            <div class="col-2 mt-2 d-flex justify-content-between align-items-center">  <!-- div filtrros  -->
     
     
-        <input type="date" id="fecha" name="fecha" class="form-control" >
+              
+     Desde
+    <input type="date" name="desde" id="desde" class="form-control col-4" > 
+   Hasta
+    <input type="date" name="hasta" id="hasta" class="form-control col-4 " > 
        
     </div> <!-- Termina div filtros  -->
 

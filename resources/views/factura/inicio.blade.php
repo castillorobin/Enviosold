@@ -8,7 +8,7 @@
         function doSearch()
 
 {
-
+ 
     const tableReg = document.getElementById('datos');
 
     const searchText = document.getElementById('searchTerm').value.toLowerCase();
