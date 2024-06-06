@@ -34,7 +34,7 @@ class PedidoController extends Controller
 
 
     }
-
+    
     public function noretirado()
     {
         //$pedidos = Pedido::all();
@@ -48,7 +48,7 @@ class PedidoController extends Controller
     }
     public function noretiradofiltro(Request $request)
     {
-        //$pedidos = Pedido::all();
+        
         //$pedidos = Pedido::whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))->get();
         $repartidores = Repartidor::all();
         //$vendedores = Vendedor::all();
@@ -56,13 +56,71 @@ class PedidoController extends Controller
         $repartidor = $request->input('repartidor');
         $rango = $request->input('rango');
         $estado = $request->input('estado');
+
+           
+        $pedidos = Pedido::where('repartidor', $repartidor)->get();   
+
+
+        if($rango=="ahora")
+        {    
+        $pedidos = $pedidos->intersect(Pedido::whereIn('fecha_entrega', [Carbon::today()])->get());    
+        }
+        if($rango=="semana")
+        {    
+            $pedidos = Pedido::where('repartidor', $repartidor)
+            ->whereBetween('fecha_entrega', [Carbon::now()->subWeek()->format("Y-m-d"), Carbon::now()])
+            ->get();
+
+       
+        }
+
+        if($rango=="semana2")
+        {    
+            $pedidos = Pedido::where('repartidor', $repartidor)
+            //->whereMonth('fecha_entrega', '>', [Carbon::now()->subDays(30)->format("Y-m-d"), Carbon::now()])
+            ->where('fecha_entrega', '>', Carbon::now()->subDays(30))
+            ->get();
+
         
-        $pedidos = Pedido::where('repartidor', $repartidor)->get();
+        } 
+        if($rango=="mes")
+        {    
+            $pedidos = Pedido::where('repartidor', $repartidor)
+            ->whereMonth('fecha_entrega', Carbon::now()->month)
+            ->get();
+
+        
+        }  
+
+        if($estado != "estado")
+        {    
+        $pedidos = $pedidos->intersect(Pedido::whereIn('estado', [$estado])->get());    
+        }
+
+
+
        
         return view('pedido.noretiradofiltro', compact('repartidores', 'pedidos'));
 
 
     }
+
+    public function cambiarnt($id)
+    {
+        
+        $pedido = Pedido::find($id);
+        $pedido->estado = "No retirado";
+        $pedido->save();
+
+        return redirect()->back();
+
+
+
+
+
+    }
+
+
 
     public function indexdigitado()
     {

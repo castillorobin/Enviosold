@@ -98,7 +98,7 @@ class FacturacionController extends Controller
             ->get();
 
         
-        } 
+        }  
 
         $desde = $request->input('desde');
         $hasta = $request->input('hasta');

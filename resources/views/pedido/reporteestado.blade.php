@@ -78,7 +78,7 @@ jQuery(document).ready(function($){
                                 <span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
                             </div>
                             <select class="form-control mi-selector" name="repartidor" id="repartidor">
-                                <option value="">Buscar Repartido</option>
+                                <option value="no">Buscar Repartido</option>
                                  @for($i=0;  $i< count($repartidores); $i++ )
                                 <option value="{{$repartidores[$i]->nombre}}">{{ $repartidores[$i]->nombre }} </option>
                

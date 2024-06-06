@@ -78,7 +78,7 @@ jQuery(document).ready(function($){
                                 <span class="input-group-text" id="basic-addon1"> <i class="fas fa-search"></i> </span>
                             </div>
                             <select class="form-control mi-selector" name="repartidor" id="repartidor">
-                                <option value="">Buscar Repartido</option>
+                                <option value="no">Buscar Repartido</option>
                                  @for($i=0;  $i< count($repartidores); $i++ )
                                 <option value="{{$repartidores[$i]->nombre}}">{{ $repartidores[$i]->nombre }} </option>
                
@@ -175,8 +175,8 @@ jQuery(document).ready(function($){
         <th style="color: #fff;">Precio del paquete</th>
         <th style="color: #fff;">Precio del envio</th>
         <th style="color: #fff;">Total</th>
-        <th style="color: #fff;">Agencia</th>
-        <th style="color: #fff;">Opciones</th>
+        
+        <th style="color: #fff; " >Opciones</th>
     </tr>
 </thead>
 <tbody> 
@@ -198,9 +198,10 @@ jQuery(document).ready(function($){
     <td  >{{ $pedidos[$i]->precio }} </td>
     <td  >{{ $pedidos[$i]->envio }}</td>
     <td  >{{ $pedidos[$i]->total }} </td>
-    <td  >{{ $pedidos[$i]->agencia }}</td>
+    
     <td  >
-        <button type="button" class="edit btn btn-warning" data-toggle="modal" value="{{ $pedidos[$i]->detallep }}" data-target="#exampleModal" >Cambiar</button>
+
+        <a href="/pedido/cambiarnt/{{ $pedidos[$i]->id }} " class="edit btn btn-warning" style="width: 100px;" >No retirado</a>
 
     </td>
 </tr>

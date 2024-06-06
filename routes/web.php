@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth']], function() {
 Route::group(['middleware' => ['auth']], function() {
 Route::get('pedido/noretirado', [App\Http\Controllers\PedidoController::class, 'noretirado'] )->name('noretirado') ;
 Route::get('pedido/noretiradofiltro', [App\Http\Controllers\PedidoController::class, 'noretiradofiltro'] )->name('noretiradofiltro') ;
+Route::get('pedido/cambiarnt/{id}', [App\Http\Controllers\PedidoController::class, 'cambiarnt'] )->name('cambiarnt') ;
 
 Route::get('pedido/desdeenvio', [App\Http\Controllers\PedidoController::class, 'desdeenvio'] )->name('desdeenvio') ;
 Route::get('pedido/comerperso', [App\Http\Controllers\PedidoController::class, 'comerperso'] )->name('comerperso') ;
